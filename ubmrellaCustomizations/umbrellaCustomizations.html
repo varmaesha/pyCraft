@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Umbrella Customization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, #ff0000, #ff9999);
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .par {
+            flex-direction: column;
+        }
+
+        .color-selector {
+            width: 200px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 40px;
+        }
+
+        .color-option {
+            width: 20px;
+            height: 20px;
+            margin: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .logo-selector {
+            margin: 44px 64px;
+        }
+
+        .logo-option {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .umbrella-container {
+            position: relative;
+
+        }
+
+        .umbrella {
+            width: 200px;
+            height: 200px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .added-logo {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="umbrella-container">
+            <div class="umbrella"></div>
+            <img class="added-logo" src="">
+        </div>
+        <div class="par">
+            <div class="color-selector">
+                <div class="color-option" style="background-color: #bd0eae;"
+                    onclick="changeColor('#e411d2', 'umbrella-pink.png')">
+                </div>
+                <div class="color-option" style="background-color: #237ea1;"
+                    onclick="changeColor('#237ea1', 'umbrella-blue.png')"></div>
+                <div class="color-option" style="background-color: #aa841b;"
+                    onclick="changeColor('#b88a0c', 'umbrella-amber.png')"></div>
+
+            </div>
+            <div class="logo-selector">
+                <button class="logo-selector-b" onclick="addLogo()">Add Logo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeColor(color, image) {
+            const umbrella = document.querySelector('.umbrella');
+            umbrella.style.backgroundImage = `url('${image}'), url('umbrella-default.png')`;
+            umbrella.style.backgroundPosition = 'right center, center';
+            umbrella.style.backgroundRepeat = 'no-repeat, no-repeat';
+
+            const body = document.querySelector('body');
+            console.log(color);
+            body.style.background = `linear-gradient(to bottom,${color}, #ff9999)`;
+
+            const button = document.querySelector('.logo-selector-b');
+            button.style.background = `linear-gradient(to bottom,${color}, #ff9999)`;
+        }
+
+        function addLogo() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function (event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const addedLogo = document.querySelector('.added-logo');
+                    addedLogo.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+    </script>
+</body>
+
+</html>
