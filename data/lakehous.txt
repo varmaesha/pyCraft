@@ -7,3 +7,9 @@ Features of Lakehouse
     - Open storage formats
     - Support Diverse data types and workloads
 
+Databircks Lakehouse Platform
+    - Unified Platform
+    - Open source and standards
+    - Multicloud across cloud consistent
+
+    
