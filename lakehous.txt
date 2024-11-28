@@ -1,0 +1,9 @@
+Features of Lakehouse
+    - Transaction support
+    - Scheme enforcemnet and governace
+    - Data governace
+    - BI support
+    - Decoupled storage from compute
+    - Open storage formats
+    - Support Diverse data types and workloads
+
