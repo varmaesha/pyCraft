@@ -26,7 +26,7 @@ def missingNum(num):
 
 """
 o(1)
-range+1 because starts from o and ends len-1
+range+1 because starts from 0 and ends len-1
 """
 
 num = [3,0,1]

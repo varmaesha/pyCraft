@@ -6,14 +6,14 @@ o(n)
 """
 
 nums = [4,3,2,7,8,2,3,1]
-def mising(nums):
-    ret = []
-    for i in range(1,len(nums)+1):
-        if i not in nums:
-            ret.append(i)
+# def mising(nums):
+#     ret = []
+#     for i in range(1,len(nums)+1):
+#         if i not in nums:
+#             ret.append(i)
 
-    return ret
-print(mising(nums))
+#     return ret
+# print(mising(nums))
 
 """
 const space sol
