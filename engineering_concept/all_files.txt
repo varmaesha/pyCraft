@@ -1,0 +1,41 @@
+https://www.youtube.com/watch?v=PTfZcN20fro
+GraphQL vs REST: Which is Better for APIs?
+
+https://www.youtube.com/watch?v=NdeTGlZ__Do
+Monolithic vs Microservice Architecture: Which To Use and When?
+
+https://www.youtube.com/watch?v=mrkQ5iLb4DM&t=27s
+What is a Webhook? Webhooks for Beginners
+
+https://www.youtube.com/watch?v=vsb4ZkUytrU
+What is API Versioning? Two Strategies for Designing Better APIs
+
+https://www.youtube.com/watch?v=TV-xsNjbx_g
+REST API Caching Strategies Every Developer Must Know
+
+https://www.youtube.com/watch?v=XAccGbtl3Z8
+Idempotency - What it is and How to Implement it
+
+https://www.youtube.com/watch?v=_qNHROq0pGk
+🔥 How Rate Limiting and Throttling Saves Your API Server From CRASHING!
+
+https://www.youtube.com/watch?v=mvlzhBgGS4s
+API Pagination - Offset and Cursor Pagination Explained - Backend Engineering
+
+https://www.youtube.com/watch?v=B76BhEq1FN8
+Difference between Authentication and Authorization in Hindi
+
+https://www.youtube.com/watch?v=9JPnN1Z_iSY
+Authentication Explained: When to Use Basic, Bearer, OAuth2, JWT & SSO
+
+https://www.youtube.com/watch?v=NqKytCEaqMw
+HTTP Request and Response Format - You Must Know It
+
+https://www.youtube.com/watch?v=wJa5CTIFj7U
+Learn HTTP Status Codes In 10 Minutes
+
+https://www.youtube.com/watch?v=9DccQUs_A_o
+What is an Endpoint? API Endpoints
+
+https://www.youtube.com/watch?v=tkfVQK6UxDI 
+HTTP Request Methods | GET, POST, PUT, DELETE
