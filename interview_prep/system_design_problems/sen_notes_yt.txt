@@ -1,0 +1,79 @@
+Design System   
+System?
+    an application
+    a microservice
+    a library
+    a hardware
+
+Can be one or combination 
+High leve arch -> macro, birds eye view
+Logical design -> business logic, ds, lagos
+Physical design -> stoarange, hw, gpu, capacity, etc
+
+High Level Design
+    1. vertical scaling -> optimize procee increse throughput using same resource
+    (pay more to pizza chef)
+    2. non-peask hours pre-processing(corn job)
+    (get the pizza bases ready at odd times early mrng)
+    3. backup and avoid single point of failure
+    (hire backup checf if main one is out sick)
+    4. Horizontal scaling -> Hire more resources
+    (hire more chefs)
+    5. Microservice ARrch -> specialized resource dedicated to perfrome a task
+    (assign pizza orders to piiza and pasta orders to pasta chef)
+    6. IDstributed System(partition) -> any faliure at one paoint serves from other loc
+    (if there fire mishap at hotel all resources at risk)
+    7. Load Balance -> comapre time for same job use whichever takes less time
+    (multiple store order delivery time comapred and see which takes less time)
+    8. Decoupling Systems -> divide roles between resources, assigning, allocatioing, managers
+    (dilevery sytem, bakery managers to be independent)
+    9. Logging & Metrices Calc ->  take events into consideration
+    (if delivery vehicle broke and take account of such events for further decisions)
+    10. Extensible -> should be able to take up future tasks
+    (should not just limit to deliver food but also be able to extend services)
+
+
+
+
+
+Scalibilty
+    Bigger Machine -  Vertical scaling
+        No load bamkacte
+        Single point of faliure
+        Inter process communication(Fast) +
+        Consistent +
+        Hardware Limit
+
+    More Machines - Horizontal Machines
+        Load Balancers needed
+        Resilent +
+        Network Calls RPC (Slow)
+        Not Consistent
+        Scales well with increaser user +
+
+Load balancing
+    Decide which machine the request should go
+    Hashing request to select between servers
+    r1 = request id associated with each request sent
+    h(r1) - > rewustid % number of servers
+    Load Factor => 1/n
+
+    Consistent Hashing -> web cachings, dbs
+        Adding and removing servers disrupts the data chahed and request sent to servers
+        Hashes are associated with user_ids
+        Hash user_ids and server_ids
+        Navigate in clockwise/circular way and serve the request to nearst server_ids
+        Load expected to be 1/n
+        Can have skewed(disorted) load
+
+        USE DIFFERENT HASH to have multiple points to be served
+        
+Messaging Queue
+    Pizza Shop Example
+        Asynchronous Process - Need not wait onto for doing other task
+    Takes tasks
+    ASiigns
+    Waits for Response
+    IF takes too long will share
+    Notification service and Load balancer to check servers live and share the tasks amongst differnet servers
+    
