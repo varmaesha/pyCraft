@@ -56,6 +56,7 @@ class ScoreCreate(BaseModel):
 class ScoreResponse(BaseModel):
     id: int
     player_id: int
+    round_number: int
     points: float
     created_at: datetime
     
@@ -299,7 +300,7 @@ def get_game_comments(game_id: int, db: Session = Depends(get_db)):
 
 @app.get("/game/{game_id}/export/csv")
 def export_game_csv(game_id: int, db: Session = Depends(get_db)):
-    """Export game data as CSV."""
+    """Export game data as CSV with round-by-round breakdown."""
     game = db.query(Game).filter(Game.id == game_id).first()
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
@@ -312,33 +313,64 @@ def export_game_csv(game_id: int, db: Session = Depends(get_db)):
     writer.writerow(["Nation Wants to Guess - Game Report"])
     writer.writerow(["Game Name", game.name])
     writer.writerow(["Created At", game.created_at.strftime('%Y-%m-%d %H:%M:%S')])
+    writer.writerow(["Status", game.status])
     writer.writerow([])
     
+    # Round-by-round breakdown
+    rounds = db.query(Round).filter(Round.game_id == game_id).order_by(Round.round_number).all()
+    for round_obj in rounds:
+        writer.writerow([f"Round {round_obj.round_number}: {round_obj.round_name}"])
+        writer.writerow(["Player", "Points"])
+        
+        scores = db.query(Score).filter(
+            (Score.game_id == game_id) & (Score.round_number == round_obj.round_number)
+        ).order_by(Score.player_id).all()
+        
+        # Group scores by player
+        player_round_scores = {}
+        for score in scores:
+            if score.player_id not in player_round_scores:
+                player_round_scores[score.player_id] = 0
+            player_round_scores[score.player_id] += score.points
+        
+        # Write scores for this round
+        for player in game.players:
+            round_score = player_round_scores.get(player.id, 0)
+            writer.writerow([player.name, round_score])
+        
+        writer.writerow([])
+    
     # Player Final Scores
-    writer.writerow(["Player Summary"])
-    writer.writerow(["Player Name", "Final Score"])
-    for player in game.players:
-        writer.writerow([player.name, player.total_score])
+    writer.writerow(["Final Standings"])
+    writer.writerow(["Rank", "Player Name", "Final Score"])
+    sorted_players = sorted(game.players, key=lambda p: p.total_score, reverse=True)
+    for rank, player in enumerate(sorted_players, 1):
+        writer.writerow([rank, player.name, player.total_score])
     
     writer.writerow([])
     
     # Score Details
-    writer.writerow(["Score Details"])
-    writer.writerow(["Player", "Points", "Timestamp"])
+    writer.writerow(["All Score Entries"])
+    writer.writerow(["Player", "Round", "Points", "Timestamp"])
     scores = db.query(Score).filter(Score.game_id == game_id).order_by(Score.created_at).all()
     for score in scores:
         player = db.query(Player).filter(Player.id == score.player_id).first()
-        writer.writerow([player.name, score.points, score.created_at.strftime('%Y-%m-%d %H:%M:%S')])
+        round_obj = db.query(Round).filter(
+            (Round.game_id == game_id) & (Round.round_number == score.round_number)
+        ).first()
+        round_name = round_obj.round_name if round_obj else "Unknown"
+        writer.writerow([player.name, round_name, score.points, score.created_at.strftime('%Y-%m-%d %H:%M:%S')])
     
     writer.writerow([])
     
     # Comments
-    writer.writerow(["Comments"])
-    writer.writerow(["Player", "Comment", "Timestamp"])
-    comments = db.query(Comment).filter(Comment.game_id == game_id).order_by(Comment.created_at).all()
-    for comment in comments:
-        player = db.query(Player).filter(Player.id == comment.player_id).first()
-        writer.writerow([player.name, comment.text, comment.created_at.strftime('%Y-%m-%d %H:%M:%S')])
+    if db.query(Comment).filter(Comment.game_id == game_id).count() > 0:
+        writer.writerow(["Comments"])
+        writer.writerow(["Player", "Comment", "Timestamp"])
+        comments = db.query(Comment).filter(Comment.game_id == game_id).order_by(Comment.created_at).all()
+        for comment in comments:
+            player = db.query(Player).filter(Player.id == comment.player_id).first()
+            writer.writerow([player.name, comment.text, comment.created_at.strftime('%Y-%m-%d %H:%M:%S')])
     
     csv_content = output.getvalue()
     return {
