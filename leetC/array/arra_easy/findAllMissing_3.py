@@ -31,6 +31,6 @@ def findMisng(nums):
             res.append(i+1)
 
     return res
-
+nums = [5,6,3,1,7,9]
 print(findMisng(nums))
 

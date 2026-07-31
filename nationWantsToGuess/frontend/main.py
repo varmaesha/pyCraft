@@ -1,6 +1,15 @@
 """
 Simple table-based UI for Nation Wants to Guess scoring app.
 Click cells to update scores, simple interface with no fancy styling.
+
+App flow:
+1. show_player_entry: enter 3 player names.
+2. start_game: send names to backend and receive game state.
+3. show_scoring_table: display current round, per-player scores, and totals.
+4. edit_score: add or edit scores for a player and round.
+5. next_round: advance the game to the next round.
+6. end_game: complete the game after all rounds and show final results.
+7. export_csv: save a CSV export of the current game.
 """
 import os
 from kivy.app import App
@@ -17,10 +26,12 @@ from datetime import datetime
 
 Window.size = (900, 600)
 
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "http://127.0.0.1:8001"
 
 
 class ScoringApp(App):
+    """Main scoring app for Nation Wants to Guess."""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.current_game = None
@@ -28,12 +39,14 @@ class ScoringApp(App):
         self.selected_cell = None
     
     def build(self):
+        """Build the root widget and start with the player entry screen."""
         self.title = "Nation Wants to Guess - Scoring"
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
         self.show_player_entry()
         return self.root
     
     def on_start(self):
+        """Verify backend connectivity when the app starts."""
         try:
             response = requests.get(f"{BACKEND_URL}/", timeout=2)
             print(f"✓ Backend connected")
