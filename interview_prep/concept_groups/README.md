@@ -16,6 +16,9 @@ This folder collects grouped interview preparation topics into concept-based fil
 - `backend_api_sql_datascience.md`
   - Covers backend API fundamentals, SQL/data processing, and pandas-related interview topics.
 
+- `react_learning_guide.md`
+  - Covers React basics to advanced interview topics, including JSX fragments, state/props, hooks, reconciliation, memoization, and performance-focused examples.
+
 ## Purpose
 
 The new files reorganize the original interview prep content into grouped topics so related concepts are stored together without losing coverage of any existing material.
